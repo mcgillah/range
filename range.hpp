@@ -23,6 +23,7 @@
 #include <reinvented-wheels/enableif.hpp>
 
 #include "emptyassert.hpp"
+#include "isrange.hpp"
 #include "predicates.hpp"
 
 namespace NRange
@@ -203,7 +204,7 @@ namespace NRange
 
     template <class TRange, class TCounter>
     static inline typename NReinventedWheels::TEnableIf<
-        sizeof(typename TRange::TRangeTag_),
+        TIsRange<TRange>::Value_,
         TRepeatedRange<TRange, TCounter, typename TRange::TAssert_>
         >::TType_ operator *(const TRange& range, const TCounter& counter)
     {
@@ -213,7 +214,7 @@ namespace NRange
 
     template <class TAssert, class TRange, class TCounter>
     static inline typename NReinventedWheels::TEnableIf<
-        sizeof(typename TRange::TRangeTag_),
+        TIsRange<TRange>::Value_,
         TRepeatedRange<TRange, TCounter, TAssert>
         >::TType_ operator *(const TRange& range, const TCounter& counter)
     {
@@ -222,8 +223,7 @@ namespace NRange
 
     template <class TRange1, class TRange2>
     static inline typename NReinventedWheels::TEnableIf<
-        sizeof(typename TRange1::TRangeTag_)
-        && sizeof(typename TRange2::TRangeTag_),
+        TIsRange<TRange1>::Value_ && TIsRange<TRange2>::Value_,
         TComposedRange<TRange1, TRange2, typename TRange1::TAssert_>
         >::TType_ operator +(const TRange1& range1, const TRange2& range2)
     {
@@ -233,8 +233,7 @@ namespace NRange
 
     template <class TAssert, class TRange1, class TRange2>
     static inline typename NReinventedWheels::TEnableIf<
-        sizeof(typename TRange1::TRangeTag_)
-        && sizeof(typename TRange2::TRangeTag_),
+        TIsRange<TRange1>::Value_ && TIsRange<TRange2>::Value_,
         TComposedRange<TRange1, TRange2, TAssert>
         >::TType_ operator +(const TRange1& range1, const TRange2& range2)
     {
