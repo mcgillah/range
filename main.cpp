@@ -16,6 +16,6 @@ void print(TRange range)
 int main()
 {
     print(SingleValue(1) * 5);
-    print(ComposeRange(SingleValue(1), SingleValue(2), SingleValue(3)) * 4);
-    print(ComposeRange(SingleValuesList(1, 3, 5) * 2, SingleValue(-16)) * TInfiniteCounter());
+    print((SingleValue(1) + SingleValue(2) + SingleValue(3)) * 4);
+    print(((SingleValue(1) + SingleValue(3) + SingleValue(5)) * 2 + SingleValue(-16)) * TInfiniteCounter());
 }

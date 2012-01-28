@@ -225,7 +225,7 @@ namespace NRange
         sizeof(typename TRange1::TRangeTag_)
         && sizeof(typename TRange2::TRangeTag_),
         TComposedRange<TRange1, TRange2, typename TRange1::TAssert_>
-        >::TType_ ComposeRange(const TRange1& range1, const TRange2& range2)
+        >::TType_ operator +(const TRange1& range1, const TRange2& range2)
     {
         return TComposedRange<TRange1, TRange2, typename TRange1::TAssert_>(
             range1, range2);
@@ -236,76 +236,9 @@ namespace NRange
         sizeof(typename TRange1::TRangeTag_)
         && sizeof(typename TRange2::TRangeTag_),
         TComposedRange<TRange1, TRange2, TAssert>
-        >::TType_ ComposeRange(const TRange1& range1, const TRange2& range2)
+        >::TType_ operator +(const TRange1& range1, const TRange2& range2)
     {
         return TComposedRange<TRange1, TRange2, TAssert>(range1, range2);
-    }
-
-    template <class TRange1, class TRange2, class TRange3>
-    static inline typename NReinventedWheels::TEnableIf<
-        sizeof(typename TRange1::TRangeTag_)
-        && sizeof(typename TRange2::TRangeTag_)
-        && sizeof(typename TRange3::TRangeTag_),
-        TComposedRange<
-            TComposedRange<TRange1, TRange2, typename TRange1::TAssert_>,
-            TRange3, typename TRange1::TAssert_>
-        >::TType_ ComposeRange(const TRange1& range1, const TRange2& range2,
-            const TRange3& range3)
-    {
-        return TComposedRange<
-            TComposedRange<TRange1, TRange2, typename TRange1::TAssert_>,
-            TRange3, typename TRange1::TAssert_>(ComposeRange(range1, range2),
-                range3);
-    }
-
-    template <class TAssert, class TRange1, class TRange2, class TRange3>
-    static inline typename NReinventedWheels::TEnableIf<
-        sizeof(typename TRange1::TRangeTag_)
-        && sizeof(typename TRange2::TRangeTag_)
-        && sizeof(typename TRange3::TRangeTag_),
-        TComposedRange<TComposedRange<TRange1, TRange2, TAssert>, TRange3,
-            TAssert>
-        >::TType_ ComposeRange(const TRange1& range1, const TRange2& range2,
-            const TRange3& range3)
-    {
-        return TComposedRange<TComposedRange<TRange1, TRange2, TAssert>,
-            TRange3, TAssert>(ComposeRange<TAssert>(range1, range2), range3);
-    }
-
-    template <class TType>
-    static inline TComposedRange<TSingleValue<TType>, TSingleValue<TType> >
-        SingleValuesList(const TType& value1, const TType& value2)
-    {
-        return ComposeRange(SingleValue(value1), SingleValue(value2));
-    }
-
-    template <class TAssert, class TType>
-    static inline TComposedRange<TSingleValue<TType>, TSingleValue<TType>,
-        TAssert> SingleValuesList(const TType& value1, const TType& value2)
-    {
-        return ComposeRange<TAssert>(SingleValue(value1), SingleValue(value2));
-    }
-
-    template <class TType>
-    static inline TComposedRange<
-        TComposedRange<TSingleValue<TType>, TSingleValue<TType> >,
-        TSingleValue<TType> >
-        SingleValuesList(const TType& value1, const TType& value2,
-        const TType& value3)
-    {
-        return ComposeRange(SingleValue(value1), SingleValue(value2),
-            SingleValue(value3));
-    }
-
-    template <class TAssert, class TType>
-    static inline TComposedRange<
-        TComposedRange<TSingleValue<TType>, TSingleValue<TType>, TAssert>,
-        TSingleValue<TType>, TAssert>
-        SingleValuesList(const TType& value1, const TType& value2,
-        const TType& value3)
-    {
-        return ComposeRange<TAssert>(SingleValue(value1), SingleValue(value2),
-            SingleValue(value3));
     }
 }
 
